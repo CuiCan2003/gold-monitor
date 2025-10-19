@@ -34,10 +34,18 @@ class PriceCollector(Monitor):
                 except:
                     pass
 
-# 启动价格监控
-collector = PriceCollector()
-monitor_thread = threading.Thread(target=collector.run, daemon=True)
-monitor_thread.start()
+# 全局监控实例
+collector = None
+monitor_thread = None
+
+def start_monitor():
+    """延迟启动监控（避免构建时连接）"""
+    global collector, monitor_thread
+    if collector is None:
+        collector = PriceCollector()
+        monitor_thread = threading.Thread(target=collector.run, daemon=True)
+        monitor_thread.start()
+        print("✅ WebSocket 监控已启动")
 
 @app.route('/')
 def index():
@@ -47,6 +55,9 @@ def index():
 @app.route('/api/prices')
 def get_prices():
     """获取所有价格"""
+    # 第一次请求时才启动监控
+    start_monitor()
+
     return jsonify({
         "success": True,
         "data": list(price_data.values()),
@@ -72,12 +83,12 @@ if __name__ == '__main__':
     print("=" * 60)
     print("🚀 大宗商品价格监控启动中...")
     print("=" * 60)
-    print("📊 等待价格数据...")
     print("🌐 API: http://localhost:5000/api/prices")
     print("🏠 网站: http://localhost:5000")
     print("=" * 60)
 
-    # 等待收集一些数据
-    time.sleep(3)
+    # 本地运行时立即启动监控
+    start_monitor()
+    time.sleep(2)  # 等待收集一些数据
 
     app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
