@@ -512,6 +512,84 @@ footer {
     margin-bottom: 25px;
 }
 
+/* 兑换器控件 */
+.converter-controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.control-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.commodity-select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.commodity-select:hover {
+    border-color: #764ba2;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+}
+
+.commodity-select:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+}
+
+.quantity-input {
+    width: 120px;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    border: 2px solid #667eea;
+    border-radius: 10px;
+    background: white;
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.quantity-input:hover {
+    border-color: #764ba2;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
+}
+
+.quantity-input:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+}
+
+.unit-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
 .converter-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));

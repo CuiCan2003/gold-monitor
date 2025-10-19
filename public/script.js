@@ -3,6 +3,12 @@ let currentCurrency = 'CNY';
 let exchangeRate = 7.25; // USD to CNY
 let goldPricePerGram = 971; // 黄金价格(人民币/克)
 let silverPricePerGram = 11.76; // 白银价格(人民币/克)
+let btcPrice = 95000; // BTC价格(USDT)
+let ethPrice = 3500; // ETH价格(USDT)
+
+// 当前选择的商品和数量
+let selectedCommodity = 'gold';
+let selectedQuantity = 1;
 
 // 实物价格参考(人民币)
 const ITEMS = [
@@ -24,6 +30,7 @@ const ITEMS = [
 document.addEventListener('DOMContentLoaded', () => {
     createParticles();
     setupCurrencySwitch();
+    setupConverterControls(); // 新增：设置兑换器控件
     fetchExchangeRate();
     fetchAllPrices();
 
@@ -56,6 +63,36 @@ function setupCurrencySwitch() {
             currentCurrency = btn.dataset.currency;
             updateAllDisplays();
         });
+    });
+}
+
+// 设置兑换器控件
+function setupConverterControls() {
+    const commoditySelect = document.getElementById('commoditySelect');
+    const quantityInput = document.getElementById('quantityInput');
+    const unitLabel = document.getElementById('unitLabel');
+
+    // 商品选择改变
+    commoditySelect.addEventListener('change', (e) => {
+        selectedCommodity = e.target.value;
+
+        // 更新单位显示
+        const units = {
+            'gold': '克',
+            'silver': '克',
+            'btc': '个',
+            'eth': '个'
+        };
+        unitLabel.textContent = units[selectedCommodity];
+
+        // 更新兑换器
+        updateConverter();
+    });
+
+    // 数量输入改变
+    quantityInput.addEventListener('input', (e) => {
+        selectedQuantity = parseFloat(e.target.value) || 0;
+        updateConverter();
     });
 }
 
@@ -123,8 +160,10 @@ async function fetchCryptoPrices() {
             const changePercent = parseFloat(item.priceChangePercent);
 
             if (symbol === 'BTCUSDT') {
+                btcPrice = price; // 保存到全局变量
                 updatePrice('btc', price, changePercent);
             } else if (symbol === 'ETHUSDT') {
+                ethPrice = price; // 保存到全局变量
                 updatePrice('eth', price, changePercent);
             }
         });
@@ -216,8 +255,27 @@ function updateConverter() {
 
     grid.innerHTML = '';
 
+    // 获取当前选中商品的总价值(人民币)
+    let totalValueCNY = 0;
+
+    switch (selectedCommodity) {
+        case 'gold':
+            totalValueCNY = goldPricePerGram * selectedQuantity;
+            break;
+        case 'silver':
+            totalValueCNY = silverPricePerGram * selectedQuantity;
+            break;
+        case 'btc':
+            totalValueCNY = btcPrice * exchangeRate * selectedQuantity;
+            break;
+        case 'eth':
+            totalValueCNY = ethPrice * exchangeRate * selectedQuantity;
+            break;
+    }
+
+    // 计算每个实物的数量
     ITEMS.forEach(item => {
-        const quantity = (goldPricePerGram / item.price).toFixed(2);
+        const quantity = (totalValueCNY / item.price).toFixed(2);
 
         const card = document.createElement('div');
         card.className = 'converter-card';
