@@ -1,17 +1,24 @@
 // 全局变量
-const OZ_TO_GRAM = 31.1034768;
 let currentCurrency = 'CNY';
-let exchangeRate = 7.25; // USD to CNY 默认汇率
-let previousPrices = {};
+let exchangeRate = 7.25; // USD to CNY
+let goldPricePerGram = 971; // 黄金价格(人民币/克)
+let silverPricePerGram = 11.76; // 白银价格(人民币/克)
 
-// API配置
-const API_CONFIG = {
-    // 生产环境使用相对路径，开发环境可以改为 'http://localhost:3000'
-    baseURL: window.location.hostname === 'localhost' ? 'http://localhost:3000' : '',
-    goldPricesEndpoint: '/api/prices',
-    binanceEndpoint: 'https://api.binance.com/api/v3/ticker/24hr?symbols=["BTCUSDT","ETHUSDT"]',
-    exchangeRateEndpoint: 'https://api.exchangerate-api.com/v4/latest/USD'
-};
+// 实物价格参考(人民币)
+const ITEMS = [
+    { name: '猪脚饭', icon: '🍱', price: 18 },
+    { name: 'KFC全家桶', icon: '🍗', price: 89 },
+    { name: 'iPhone 17 Pro Max', icon: '📱', price: 9999 },
+    { name: 'MacBook Air', icon: '💻', price: 7999 },
+    { name: '劳力士手表', icon: '⌚', price: 60000 },
+    { name: '小米SU7', icon: '🚗', price: 215900 },
+    { name: '保时捷帕拉梅拉', icon: '🏎️', price: 970000 },
+    { name: '法拉利罗马', icon: '🏁', price: 2380000 },
+    { name: '喜茶', icon: '🍵', price: 25 },
+    { name: '星巴克', icon: '☕', price: 35 },
+    { name: '海底捞', icon: '🍲', price: 120 },
+    { name: 'AirPods Pro', icon: '🎧', price: 1999 }
+];
 
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,12 +62,12 @@ function setupCurrencySwitch() {
 // 获取汇率
 async function fetchExchangeRate() {
     try {
-        const response = await fetch(API_CONFIG.exchangeRateEndpoint);
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
         const data = await response.json();
         exchangeRate = data.rates.CNY || 7.25;
     } catch (error) {
         console.error('获取汇率失败:', error);
-        exchangeRate = 7.25; // 使用默认汇率
+        exchangeRate = 7.25;
     }
 }
 
@@ -70,53 +77,44 @@ async function fetchAllPrices() {
         fetchGoldSilverPrices(),
         fetchCryptoPrices()
     ]);
+    updateConverter();
     updateLastUpdateTime();
 }
 
-// 获取黄金白银价格（从Python API）
+// 获取黄金白银价格
 async function fetchGoldSilverPrices() {
     try {
-        const response = await fetch(API_CONFIG.baseURL + API_CONFIG.goldPricesEndpoint);
+        const response = await fetch('/api/prices');
         const result = await response.json();
 
         if (result.success && result.data) {
             const prices = {};
 
-            // 解析数据
             result.data.forEach(item => {
-                prices[item.code] = item.price;
+                prices[item.symbol] = item.price;
             });
 
             // 黄金价格（克）
-            const goldGramPrice = prices['AU9999_BUY'] || prices['AU9999'] || 971;
-            updatePrice('gold-g', goldGramPrice, 0);
-
-            // 黄金价格（盎司）
-            const goldOzPrice = goldGramPrice * OZ_TO_GRAM;
-            updatePrice('gold-oz', goldOzPrice, 0);
+            goldPricePerGram = prices['AU9999'] || prices['AU9999_BUY'] || 971;
+            updatePrice('gold-g', goldPricePerGram, 0);
 
             // 白银价格（克）
-            const silverGramPrice = prices['SILVER_BUY'] || prices['SILVER_TD'] || 11.76;
-            updatePrice('silver-g', silverGramPrice, 0);
-
-            // 白银价格（盎司）
-            const silverOzPrice = silverGramPrice * OZ_TO_GRAM;
-            updatePrice('silver-oz', silverOzPrice, 0);
+            silverPricePerGram = prices['ASILVER_TD'] || prices['SILVER_BUY'] || 11.76;
+            updatePrice('silver-g', silverPricePerGram, 0);
         }
     } catch (error) {
         console.error('获取黄金白银价格失败:', error);
-        // 使用默认价格
-        updatePrice('gold-g', 971, 0);
-        updatePrice('gold-oz', 971 * OZ_TO_GRAM, 0);
-        updatePrice('silver-g', 11.76, 0);
-        updatePrice('silver-oz', 11.76 * OZ_TO_GRAM, 0);
+        goldPricePerGram = 971;
+        silverPricePerGram = 11.76;
+        updatePrice('gold-g', goldPricePerGram, 0);
+        updatePrice('silver-g', silverPricePerGram, 0);
     }
 }
 
-// 获取加密货币价格（从币安）
+// 获取加密货币价格
 async function fetchCryptoPrices() {
     try {
-        const response = await fetch(API_CONFIG.binanceEndpoint);
+        const response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=["BTCUSDT","ETHUSDT"]');
         const data = await response.json();
 
         data.forEach(item => {
@@ -142,41 +140,40 @@ function updatePrice(symbol, priceUSD, changePercent) {
 
     if (!priceElement) return;
 
-    // 根据当前货币显示价格
     let displayPrice = priceUSD;
-    let currencySymbol = '$';
-    let unit = 'USD';
+    let currencySymbol = '¥';
+    let unit = 'CNY';
 
-    if (currentCurrency === 'CNY') {
-        // 加密货币需要转换，贵金属已经是人民币
+    if (currentCurrency === 'USD') {
+        // 如果是黄金白银，需要从人民币转换为美元
+        if (symbol === 'gold-g' || symbol === 'silver-g') {
+            displayPrice = priceUSD / exchangeRate;
+            currencySymbol = '$';
+            unit = 'USD';
+        } else {
+            // BTC/ETH 已经是美元
+            currencySymbol = '$';
+            unit = 'USDT';
+        }
+    } else {
+        // CNY
         if (symbol === 'btc' || symbol === 'eth') {
+            // 加密货币转换为人民币
             displayPrice = priceUSD * exchangeRate;
             currencySymbol = '¥';
             unit = 'CNY';
         } else {
-            // 黄金白银已经是人民币价格
+            // 黄金白银已经是人民币
             currencySymbol = '¥';
             unit = 'CNY';
         }
-    } else {
-        // 如果选择美元，黄金白银需要转换
-        if (symbol.includes('gold') || symbol.includes('silver')) {
-            displayPrice = priceUSD / exchangeRate;
-            currencySymbol = '$';
-            unit = 'USD';
-        }
     }
-
-    // 存储原始价格用于比较
-    const oldPrice = previousPrices[symbol] || displayPrice;
-    previousPrices[symbol] = displayPrice;
 
     // 格式化价格
     const formattedPrice = displayPrice < 10
         ? displayPrice.toFixed(4)
         : displayPrice.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-    // 更新价格
     priceElement.textContent = formattedPrice;
 
     // 更新货币符号
@@ -187,7 +184,6 @@ function updatePrice(symbol, priceUSD, changePercent) {
             currencySymbolElement.textContent = currencySymbol;
         }
 
-        // 更新单位
         const unitElement = card.querySelector('.unit');
         if (unitElement && (symbol === 'btc' || symbol === 'eth')) {
             unitElement.textContent = unit;
@@ -195,47 +191,44 @@ function updatePrice(symbol, priceUSD, changePercent) {
     }
 
     // 更新涨跌幅
-    if (changeElement) {
+    if (changeElement && changePercent !== undefined && changePercent !== 0) {
         const percentElement = changeElement.querySelector('.change-percent');
         const arrowElement = changeElement.querySelector('.change-arrow');
 
-        if (changePercent !== undefined && changePercent !== 0) {
-            const sign = changePercent > 0 ? '+' : '';
-            percentElement.textContent = `${sign}${changePercent.toFixed(2)}%`;
+        const sign = changePercent > 0 ? '+' : '';
+        percentElement.textContent = `${sign}${changePercent.toFixed(2)}%`;
 
-            changeElement.className = 'change';
-            if (changePercent > 0) {
-                changeElement.classList.add('positive');
-                arrowElement.textContent = '↗';
-            } else {
-                changeElement.classList.add('negative');
-                arrowElement.textContent = '↘';
-            }
+        changeElement.className = 'change';
+        if (changePercent > 0) {
+            changeElement.classList.add('positive');
+            arrowElement.textContent = '↗';
         } else {
-            // 基于价格变化显示
-            const priceDiff = displayPrice - oldPrice;
-            if (Math.abs(priceDiff) > 0.01) {
-                const sign = priceDiff > 0 ? '+' : '';
-                const pct = ((priceDiff / oldPrice) * 100).toFixed(2);
-                percentElement.textContent = `${sign}${pct}%`;
-
-                changeElement.className = 'change';
-                if (priceDiff > 0) {
-                    changeElement.classList.add('positive');
-                    arrowElement.textContent = '↗';
-                } else {
-                    changeElement.classList.add('negative');
-                    arrowElement.textContent = '↘';
-                }
-            }
+            changeElement.classList.add('negative');
+            arrowElement.textContent = '↘';
         }
     }
+}
 
-    // 价格变化动画
-    if (Math.abs(displayPrice - oldPrice) > 0.01) {
-        priceElement.classList.add('price-flash');
-        setTimeout(() => priceElement.classList.remove('price-flash'), 500);
-    }
+// 更新等价兑换模拟器
+function updateConverter() {
+    const grid = document.getElementById('converterGrid');
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    ITEMS.forEach(item => {
+        const quantity = (goldPricePerGram / item.price).toFixed(2);
+
+        const card = document.createElement('div');
+        card.className = 'converter-card';
+        card.innerHTML = `
+            <div class="converter-icon">${item.icon}</div>
+            <div class="converter-name">${item.name}</div>
+            <div class="converter-value">${quantity}</div>
+            <div class="converter-unit">个</div>
+        `;
+        grid.appendChild(card);
+    });
 }
 
 // 更新所有显示

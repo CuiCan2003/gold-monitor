@@ -488,3 +488,99 @@ footer {
         padding: 20px;
     }
 }
+
+/* 等价兑换模拟器 */
+.converter-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #667eea;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.converter-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.converter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.converter-card {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.converter-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+    border-color: #667eea;
+}
+
+.converter-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.converter-name {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.converter-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.converter-unit {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .converter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+    
+    .converter-card {
+        padding: 15px;
+    }
+    
+    .converter-icon {
+        font-size: 2.5rem;
+    }
+    
+    .converter-value {
+        font-size: 1.5rem;
+    }
+}

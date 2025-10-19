@@ -39,6 +39,18 @@
             最后更新: <span id="lastUpdate">--</span>
         </div>
 
+        <!-- 等价兑换模拟器 -->
+        <div class="converter-section">
+            <h2 class="section-title">💰 等价兑换模拟器</h2>
+            <p class="converter-subtitle">1克黄金 = 多少实物？</p>
+
+            <div class="converter-grid" id="converterGrid">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 价格监控 -->
+        <h2 class="section-title">📊 实时价格</h2>
         <div class="cards-grid">
             <!-- 黄金 - 克 -->
             <div class="price-card gold-card" data-symbol="gold-g">
@@ -57,23 +69,6 @@
                 <div class="card-glow"></div>
             </div>
 
-            <!-- 黄金 - 盎司 -->
-            <div class="price-card gold-card" data-symbol="gold-oz">
-                <div class="card-header">
-                    <span class="icon">🥇</span>
-                    <span class="name">黄金 (盎司)</span>
-                </div>
-                <div class="price-info">
-                    <div class="price"><span class="currency-symbol">¥</span><span id="gold-oz-price">--</span></div>
-                    <div class="unit">元/盎司</div>
-                </div>
-                <div class="change" id="gold-oz-change">
-                    <span class="change-percent">--</span>
-                    <span class="change-arrow"></span>
-                </div>
-                <div class="card-glow"></div>
-            </div>
-
             <!-- 白银 - 克 -->
             <div class="price-card silver-card" data-symbol="silver-g">
                 <div class="card-header">
@@ -85,23 +80,6 @@
                     <div class="unit">元/克</div>
                 </div>
                 <div class="change" id="silver-g-change">
-                    <span class="change-percent">--</span>
-                    <span class="change-arrow"></span>
-                </div>
-                <div class="card-glow"></div>
-            </div>
-
-            <!-- 白银 - 盎司 -->
-            <div class="price-card silver-card" data-symbol="silver-oz">
-                <div class="card-header">
-                    <span class="icon">🥈</span>
-                    <span class="name">白银 (盎司)</span>
-                </div>
-                <div class="price-info">
-                    <div class="price"><span class="currency-symbol">¥</span><span id="silver-oz-price">--</span></div>
-                    <div class="unit">元/盎司</div>
-                </div>
-                <div class="change" id="silver-oz-change">
                     <span class="change-percent">--</span>
                     <span class="change-arrow"></span>
                 </div>
