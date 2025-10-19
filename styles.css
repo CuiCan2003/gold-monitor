@@ -1,0 +1,490 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #0a0e27;
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 粒子背景 */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    overflow: hidden;
+}
+
+.particles-container::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    animation: particleFloat 20s linear infinite;
+}
+
+@keyframes particleFloat {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+header h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5),
+                 0 0 40px rgba(100,200,255,0.4);
+}
+
+.glowing-text {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(255,255,255,0.5),
+                     0 0 40px rgba(100,200,255,0.4);
+    }
+    to {
+        text-shadow: 0 0 30px rgba(255,255,255,0.8),
+                     0 0 60px rgba(100,200,255,0.6),
+                     0 0 80px rgba(100,200,255,0.4);
+    }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* 货币切换按钮 */
+.currency-switch {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.currency-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.currency-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.4);
+    transform: translateY(-2px);
+}
+
+.currency-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    box-shadow: 0 0 20px rgba(102,126,234,0.5);
+}
+
+.currency-icon {
+    font-size: 1.3rem;
+}
+
+/* 联系横幅 */
+.contact-banner {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+    padding: 15px 30px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto 25px;
+    max-width: 600px;
+    box-shadow: 0 10px 30px rgba(255,215,0,0.4);
+    animation: bannerPulse 2s ease-in-out infinite;
+}
+
+@keyframes bannerPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 30px rgba(255,215,0,0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 15px 40px rgba(255,215,0,0.6);
+    }
+}
+
+.banner-icon {
+    font-size: 1.8rem;
+    animation: ring 2s ease-in-out infinite;
+}
+
+@keyframes ring {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(-15deg); }
+    20%, 40% { transform: rotate(15deg); }
+}
+
+.banner-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.banner-phone {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #c41e3a;
+    text-decoration: none;
+    padding: 8px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.banner-phone:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    color: #ff0000;
+}
+
+.last-update {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    opacity: 0.9;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    backdrop-filter: blur(10px);
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.price-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    transition: all 0.4s ease;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+.price-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.price-card:hover::before {
+    left: 100%;
+}
+
+.price-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+/* 卡片发光效果 */
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.price-card:hover .card-glow {
+    opacity: 1;
+}
+
+/* 不同商品的特色边框 */
+.gold-card:hover {
+    border-color: #ffd700;
+    box-shadow: 0 20px 50px rgba(255,215,0,0.3);
+}
+
+.silver-card:hover {
+    border-color: #c0c0c0;
+    box-shadow: 0 20px 50px rgba(192,192,192,0.3);
+}
+
+.oil-card:hover {
+    border-color: #ff6b6b;
+    box-shadow: 0 20px 50px rgba(255,107,107,0.3);
+}
+
+.btc-card:hover {
+    border-color: #f7931a;
+    box-shadow: 0 20px 50px rgba(247,147,26,0.3);
+}
+
+.eth-card:hover {
+    border-color: #627eea;
+    box-shadow: 0 20px 50px rgba(98,126,234,0.3);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.2));
+}
+
+.name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.price-info {
+    margin-bottom: 18px;
+}
+
+.price {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.currency-symbol {
+    font-size: 2.2rem;
+    margin-right: 5px;
+}
+
+.unit {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.change {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.change.positive {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    box-shadow: 0 4px 15px rgba(21,87,36,0.2);
+}
+
+.change.negative {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    box-shadow: 0 4px 15px rgba(114,28,36,0.2);
+}
+
+.change-arrow {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.change.positive .change-arrow::before {
+    content: '▲';
+    animation: bounce 1s infinite;
+}
+
+.change.negative .change-arrow::before {
+    content: '▼';
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.price-card.pulse {
+    animation: cardPulse 0.6s ease-out;
+}
+
+@keyframes cardPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+}
+
+footer {
+    text-align: center;
+    color: white;
+    padding: 30px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.disclaimer {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+}
+
+.author {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.author-name {
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%, #f093fb 200%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.2rem;
+    text-shadow: 0 0 20px rgba(102,126,234,0.5);
+    animation: authorGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes authorGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(102,126,234,0.3));
+    }
+    to {
+        filter: drop-shadow(0 0 15px rgba(118,75,162,0.6));
+    }
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    .price {
+        font-size: 2.2rem;
+    }
+
+    .currency-symbol {
+        font-size: 1.8rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .currency-switch {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .currency-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .price-card {
+        padding: 20px;
+    }
+}

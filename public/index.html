@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大宗商品实时价格监控</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 背景粒子效果 -->
+    <div class="particles-container" id="particles"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="glowing-text">🌍 大宗商品实时价格监控</h1>
+            <p class="subtitle">实时更新 · 全球市场</p>
+
+            <!-- 货币切换按钮 -->
+            <div class="currency-switch">
+                <button class="currency-btn active" data-currency="CNY">
+                    <span class="currency-icon">¥</span>
+                    <span>人民币</span>
+                </button>
+                <button class="currency-btn" data-currency="USD">
+                    <span class="currency-icon">$</span>
+                    <span>美元</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 黄金回收电话横幅 -->
+        <div class="contact-banner">
+            <span class="banner-icon">📞</span>
+            <span class="banner-text">全来宾黄金源头回收电话</span>
+            <a href="tel:17777222219" class="banner-phone">17777222219</a>
+        </div>
+
+        <div class="last-update">
+            最后更新: <span id="lastUpdate">--</span>
+        </div>
+
+        <div class="cards-grid">
+            <!-- 黄金 - 克 -->
+            <div class="price-card gold-card" data-symbol="gold-g">
+                <div class="card-header">
+                    <span class="icon">🥇</span>
+                    <span class="name">黄金 (克)</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">¥</span><span id="gold-g-price">--</span></div>
+                    <div class="unit">元/克</div>
+                </div>
+                <div class="change" id="gold-g-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <!-- 黄金 - 盎司 -->
+            <div class="price-card gold-card" data-symbol="gold-oz">
+                <div class="card-header">
+                    <span class="icon">🥇</span>
+                    <span class="name">黄金 (盎司)</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">¥</span><span id="gold-oz-price">--</span></div>
+                    <div class="unit">元/盎司</div>
+                </div>
+                <div class="change" id="gold-oz-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <!-- 白银 - 克 -->
+            <div class="price-card silver-card" data-symbol="silver-g">
+                <div class="card-header">
+                    <span class="icon">🥈</span>
+                    <span class="name">白银 (克)</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">¥</span><span id="silver-g-price">--</span></div>
+                    <div class="unit">元/克</div>
+                </div>
+                <div class="change" id="silver-g-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <!-- 白银 - 盎司 -->
+            <div class="price-card silver-card" data-symbol="silver-oz">
+                <div class="card-header">
+                    <span class="icon">🥈</span>
+                    <span class="name">白银 (盎司)</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">¥</span><span id="silver-oz-price">--</span></div>
+                    <div class="unit">元/盎司</div>
+                </div>
+                <div class="change" id="silver-oz-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <!-- BTC -->
+            <div class="price-card crypto-card" data-symbol="btc">
+                <div class="card-header">
+                    <span class="icon">₿</span>
+                    <span class="name">比特币</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">$</span><span id="btc-price">--</span></div>
+                    <div class="unit">USDT</div>
+                </div>
+                <div class="change" id="btc-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+
+            <!-- ETH -->
+            <div class="price-card crypto-card" data-symbol="eth">
+                <div class="card-header">
+                    <span class="icon">Ξ</span>
+                    <span class="name">以太坊</span>
+                </div>
+                <div class="price-info">
+                    <div class="price"><span class="currency-symbol">$</span><span id="eth-price">--</span></div>
+                    <div class="unit">USDT</div>
+                </div>
+                <div class="change" id="eth-change">
+                    <span class="change-percent">--</span>
+                    <span class="change-arrow"></span>
+                </div>
+                <div class="card-glow"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>制作人: Alpha8-阳光男孩</p>
+            <p class="disclaimer">* 价格仅供参考，实际交易请以市场价为准</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
