@@ -133,18 +133,18 @@ async function fetchGoldSilverPrices() {
 
             // 黄金价格（克）
             goldPricePerGram = prices['AU9999'] || prices['AU9999_BUY'] || 971;
-            updatePrice('gold-g', goldPricePerGram, 0);
+            updatePrice('gold-g', goldPricePerGram, 0, true); // true 表示总是显示涨跌幅
 
             // 白银价格（克）
             silverPricePerGram = prices['ASILVER_TD'] || prices['SILVER_BUY'] || 11.76;
-            updatePrice('silver-g', silverPricePerGram, 0);
+            updatePrice('silver-g', silverPricePerGram, 0, true); // true 表示总是显示涨跌幅
         }
     } catch (error) {
         console.error('获取黄金白银价格失败:', error);
         goldPricePerGram = 971;
         silverPricePerGram = 11.76;
-        updatePrice('gold-g', goldPricePerGram, 0);
-        updatePrice('silver-g', silverPricePerGram, 0);
+        updatePrice('gold-g', goldPricePerGram, 0, true);
+        updatePrice('silver-g', silverPricePerGram, 0, true);
     }
 }
 
@@ -173,7 +173,7 @@ async function fetchCryptoPrices() {
 }
 
 // 更新单个价格
-function updatePrice(symbol, priceUSD, changePercent) {
+function updatePrice(symbol, priceUSD, changePercent, forceShowChange = false) {
     const priceElement = document.getElementById(`${symbol}-price`);
     const changeElement = document.getElementById(`${symbol}-change`);
 
@@ -230,20 +230,27 @@ function updatePrice(symbol, priceUSD, changePercent) {
     }
 
     // 更新涨跌幅
-    if (changeElement && changePercent !== undefined && changePercent !== 0) {
-        const percentElement = changeElement.querySelector('.change-percent');
-        const arrowElement = changeElement.querySelector('.change-arrow');
+    if (changeElement) {
+        // 如果 forceShowChange 为 true 或者有涨跌幅，则显示
+        if (forceShowChange || (changePercent !== undefined && changePercent !== 0)) {
+            const percentElement = changeElement.querySelector('.change-percent');
+            const arrowElement = changeElement.querySelector('.change-arrow');
 
-        const sign = changePercent > 0 ? '+' : '';
-        percentElement.textContent = `${sign}${changePercent.toFixed(2)}%`;
+            const sign = changePercent > 0 ? '+' : '';
+            percentElement.textContent = `${sign}${changePercent.toFixed(2)}%`;
 
-        changeElement.className = 'change';
-        if (changePercent > 0) {
-            changeElement.classList.add('positive');
-            arrowElement.textContent = '↗';
-        } else {
-            changeElement.classList.add('negative');
-            arrowElement.textContent = '↘';
+            changeElement.className = 'change';
+            if (changePercent > 0) {
+                changeElement.classList.add('positive');
+                arrowElement.textContent = '↗';
+            } else if (changePercent < 0) {
+                changeElement.classList.add('negative');
+                arrowElement.textContent = '↘';
+            } else {
+                // changePercent === 0 的情况
+                changeElement.classList.add('positive');
+                arrowElement.textContent = '—';
+            }
         }
     }
 }
@@ -284,6 +291,7 @@ function updateConverter() {
             <div class="converter-name">${item.name}</div>
             <div class="converter-value">${quantity}</div>
             <div class="converter-unit">个</div>
+            <div class="converter-price">¥${item.price}</div>
         `;
         grid.appendChild(card);
     });
