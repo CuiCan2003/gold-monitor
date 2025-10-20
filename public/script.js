@@ -12,18 +12,18 @@ let selectedQuantity = 1;
 
 // 实物价格参考(人民币)
 const ITEMS = [
-    { name: '猪脚饭', icon: '🍱', price: 18 },
-    { name: 'KFC全家桶', icon: '🍗', price: 89 },
-    { name: 'iPhone 17 Pro Max', icon: '📱', price: 9999 },
-    { name: 'MacBook Air', icon: '💻', price: 7999 },
-    { name: '劳力士手表', icon: '⌚', price: 60000 },
-    { name: '小米SU7', icon: '🚗', price: 215900 },
-    { name: '保时捷帕拉梅拉', icon: '🏎️', price: 970000 },
-    { name: '法拉利罗马', icon: '🏁', price: 2380000 },
-    { name: '喜茶', icon: '🍵', price: 25 },
-    { name: '星巴克', icon: '☕', price: 35 },
-    { name: '海底捞', icon: '🍲', price: 120 },
-    { name: 'AirPods Pro', icon: '🎧', price: 1999 }
+    { name: '猪脚饭', icon: '🍱', price: 18, unit: '份' },
+    { name: 'KFC全家桶', icon: '🍗', price: 89, unit: '份' },
+    { name: 'iPhone 17 Pro Max', icon: '📱', price: 9999, unit: '部' },
+    { name: 'MacBook Air', icon: '💻', price: 7999, unit: '台' },
+    { name: '劳力士手表', icon: '⌚', price: 60000, unit: '块' },
+    { name: '小米SU7', icon: '🚗', price: 215900, unit: '辆' },
+    { name: '保时捷帕拉梅拉', icon: '🏎️', price: 970000, unit: '辆' },
+    { name: '法拉利罗马', icon: '🏁', price: 2380000, unit: '辆' },
+    { name: '喜茶', icon: '🍵', price: 25, unit: '杯' },
+    { name: '星巴克', icon: '☕', price: 35, unit: '杯' },
+    { name: '海底捞', icon: '🍲', price: 120, unit: '顿' },
+    { name: 'AirPods Pro', icon: '🎧', price: 1999, unit: '副' }
 ];
 
 // 初始化
@@ -290,7 +290,7 @@ function updateConverter() {
             <div class="converter-icon">${item.icon}</div>
             <div class="converter-name">${item.name}</div>
             <div class="converter-value">${quantity}</div>
-            <div class="converter-unit">个</div>
+            <div class="converter-unit">${item.unit}</div>
             <div class="converter-price">¥${item.price}</div>
         `;
         grid.appendChild(card);
