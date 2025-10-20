@@ -451,41 +451,254 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
     header h1 {
-        font-size: 2.2rem;
-    }
-
-    .price {
-        font-size: 2.2rem;
-    }
-
-    .currency-symbol {
         font-size: 1.8rem;
+        margin-bottom: 10px;
     }
 
-    .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
     }
 
+    /* 货币切换按钮 */
     .currency-switch {
         flex-direction: row;
-        gap: 10px;
+        gap: 8px;
+        margin-top: 15px;
     }
 
     .currency-btn {
-        padding: 10px 18px;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .currency-icon {
+        font-size: 1.1rem;
+    }
+
+    /* 联系横幅 */
+    .contact-banner {
+        flex-direction: column;
+        padding: 12px 20px;
+        gap: 10px;
+        margin: 15px auto 20px;
+    }
+
+    .banner-text {
+        font-size: 0.95rem;
+    }
+
+    .banner-phone {
+        font-size: 1.1rem;
+        padding: 6px 15px;
+    }
+
+    /* 最后更新时间 */
+    .last-update {
+        font-size: 0.85rem;
+        padding: 8px 15px;
+        margin-bottom: 20px;
+    }
+
+    /* 价格卡片 */
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .price-card {
+        padding: 20px;
+    }
+
+    .icon {
+        font-size: 2rem;
+    }
+
+    .name {
+        font-size: 1.2rem;
+    }
+
+    .price {
+        font-size: 2rem;
+    }
+
+    .currency-symbol {
+        font-size: 1.6rem;
+    }
+
+    .unit {
         font-size: 0.9rem;
+    }
+
+    .change {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    /* 兑换模拟器 */
+    .converter-section {
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 15px;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .converter-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .converter-controls {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .control-group {
+        width: 100%;
+        padding: 12px 20px;
+        justify-content: space-between;
+    }
+
+    .control-group label {
+        font-size: 0.9rem;
+    }
+
+    .commodity-select {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        flex: 1;
+        max-width: 150px;
+    }
+
+    .quantity-input {
+        width: 100px;
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+
+    .unit-label {
+        font-size: 0.9rem;
+    }
+
+    .converter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+
+    .converter-card {
+        padding: 12px;
+    }
+
+    .converter-icon {
+        font-size: 2.2rem;
+    }
+
+    .converter-name {
+        font-size: 0.8rem;
+    }
+
+    .converter-value {
+        font-size: 1.4rem;
+    }
+
+    .converter-unit {
+        font-size: 0.75rem;
+    }
+
+    .converter-price {
+        font-size: 0.7rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 20px 15px;
+        font-size: 0.85rem;
+    }
+
+    .disclaimer {
+        font-size: 0.8rem;
+    }
+
+    .author {
+        font-size: 0.95rem;
+    }
+
+    .author-name {
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+
+    .currency-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .contact-banner {
+        padding: 10px 15px;
+    }
+
+    .banner-text {
+        font-size: 0.85rem;
+    }
+
+    .banner-phone {
+        font-size: 1rem;
     }
 
     .price-card {
-        padding: 20px;
+        padding: 15px;
+    }
+
+    .price {
+        font-size: 1.8rem;
+    }
+
+    .converter-section {
+        padding: 15px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .converter-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 8px;
+    }
+
+    .converter-card {
+        padding: 10px;
+    }
+
+    .converter-icon {
+        font-size: 2rem;
+    }
+
+    .converter-value {
+        font-size: 1.2rem;
     }
 }
 
